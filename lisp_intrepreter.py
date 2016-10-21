@@ -1,16 +1,16 @@
 ### Lisp Intrepreter in Python
-
 ## Parser
 
-import functools
+from functools import reduce
 
 def bracket_parser(data):
 	if data[0]=='(' or data[0]==')':
 	    return [data[0],data[1:]]
 	    
 #needs some fix		
+
 def space_parser(data):
-	if not data[0]:
+    if not data[0]:
 		for i in range(len(data)):
 			if data[i]:
 				return ['',data[i:]]
@@ -100,7 +100,7 @@ def lisp_parser(data):
         return atom(token)
        	
 def any_one_parser_factory(*args): 
-    return lambda data:(functools.reduce(lambda f,g:f if f(data) else g,args)(data))
+    return lambda data:(reduce(lambda f,g:f if f(data) else g,args)(data))
          				               			
 value_parser=any_one_parser_factory(bracket_parser,number_parser,declarator_parser,lambda_parser,if_parser,binary_parser,arithemetic_parser,unary_parser,keyword_parser)
 		

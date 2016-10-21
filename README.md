@@ -1,6 +1,6 @@
 # Lisp Interpreter
 
-**(Still Under Construction)**
+**(Work In Progress)**
 
 A Lisp interpreter in python with individual parsers which parse: ----
 
