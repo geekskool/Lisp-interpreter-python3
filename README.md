@@ -1,9 +1,11 @@
 # Lisp Interpreter
 
-A Lisp interpreter in python with individual parsers which parse: ----array, boolean, colon, comma, null, number, object, string.
+**(Still Under Construction)**
+
+A Lisp interpreter in python with individual parsers which parse: ----
 
 
-Provided 5 example lisp files for testing. Lisp files are examples from the Lisp Website[------]
+Provided  example lisp files for testing. 
 -
 
 ## Usage

@@ -2,14 +2,6 @@
 
 ## Parser
 
-##To-Do:
-## 1.join token+read from tokens=lisp_parser-done
-## 2.reduce the parser factory finction to one line.-done
-## 4.Chage the input format to read data from files.-done
-##-------------------------------------
-## 3.make the space parser work with the rest.
-## 5.write the expression parser and reorganise things w.r.t it.
-
 import functools
 
 def bracket_parser(data):
