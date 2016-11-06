@@ -63,7 +63,7 @@ def eval(x, dic):
         (_, var, exp) = x
         dic[var] = eval(exp, dic)
     elif x[0] == 'lambda':
-        (_, parms, body, args) = x
+        (_, parms, body, *args) = x
         return lambda_procedure(parms, body, args)
     else:
         proc = eval(x[0], dic)
@@ -71,16 +71,16 @@ def eval(x, dic):
         return proc(args)
 
 #((lambda (a b c x)(+ (* a (* x x)) (* b x) c)) 4 2 9 3))
-#print(eval(['define', 'x', 10],lisp_to_python_dic))
-#print(eval(['define', 'y', 5],lisp_to_python_dic))
-#print(eval(['lambda', ['x', 'y'], ['*', 'x', 'y'], 5, 2],lisp_to_python_dic)) #- not working
+print(eval(['define', 'x', 10],lisp_to_python_dic))
+print(eval(['define', 'y', 5],lisp_to_python_dic))
+print(eval(['lambda', ['x', 'y'], ['*', 'x', 'y'], 5, 2],lisp_to_python_dic))
 
 #print(eval(['*', ['+', 5, 7], ['/', 4, 2]]))
 
 
-#print(eval(['*', 'x', 'x'],lisp_to_python_dic))
+print(eval(['*', 'x', 'x'],lisp_to_python_dic))
 
-#print(eval(expression_parser('(+ 5 (* 3 2))'),lisp_to_python_dic))
+print(eval(expression_parser('(+ 5 (* 3 2) )')[0],lisp_to_python_dic))
 
-#print(eval(['if', ['>', 5 ,10], ['+','10','5'],['-', 10, 5]])) -not working
+#print(eval(['if', ['>', 5 ,10], ['+','10','5'],['-', 10, 5]])) #-not working
 

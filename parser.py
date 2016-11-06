@@ -8,7 +8,6 @@ def bracket_parser(data):
     if data[0] == '(':
         return [data[0], data[1:]]
 
-#source 
 def space_parser(data):
     space_reg_ex = re.compile('\s+')
     space_match = space_reg_ex.match(data)
@@ -25,7 +24,7 @@ def identifier_parser(data):
     pass
 
 keywords_li = ['define', 'lambda', '*', '+', '-', '/', '<', '>', '<=', '>=', '%', 'if',
-            'length', 'abs', 'append', 'pow', 'min', 'max', 'round', 'not', 'quote']
+               'length', 'abs', 'append', 'pow', 'min', 'max', 'round', 'not', 'quote']
 
 def keyword_parser(data):
     for item in keywords_li:
@@ -70,29 +69,30 @@ def se_parser(data):
 
 def atom(s):
     try: return int(s)
+    except TypeError:
+        return s
     except ValueError:
         try: return float(s)
         except ValueError:
             return str(s)
 
 def expression_parser(data):
-    global rest
-    if len(data)==0:
-        raise SyntaxError
-    if space_parser(data):
-        data = space_parser(data).pop(1)      
     res = value_parser(data)
     rest = res.pop(1)
     token = res.pop(0)
-    if '(' == token:
-        List = []
-        #print(List)
+    if token == '(':
+        L = []
         while rest[0] != ')':
-            List.append(expression_parser(rest))
+            nex = expression_parser(rest)
+            rest = nex.pop(1)
+            token = nex.pop(0)
+            if token[0] == ' ' or token == '\n':
+                continue
+            L.append(atom(token))
         rest = rest[1:]
-        return List
+        return [L, rest]
     else:
-        return atom(token)
+        return [token, rest]
 
 def any_one_parser_factory(*args):
     return lambda data: (reduce(lambda f, g: f if f(data)  else g, args)(data))
@@ -101,11 +101,10 @@ value_parser = any_one_parser_factory(space_parser, bracket_parser, keyword_pars
 key_parser = any_one_parser_factory(declarator_parser, lambda_parser, if_parser,
                                     binary_parser, arithemetic_parser, unary_parser)
 
-
 def main():
     file_name = input()
     with open(file_name, 'r') as f:
-        data = f.read()
+        data = f.read().strip()
     print(expression_parser(data))
 
 if __name__ == "__main__":
