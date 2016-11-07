@@ -2,7 +2,7 @@
 
 **(Work In Progress)**
 
-A Lisp interpreter in python with individual parsers which parse: ----
+A Lisp interpreter in python with individual parsers which parse: space_parser, bracket_parser, keyword_parser, number_parser, declarator_parser, lambda_parser, if_parser, binary_parser, arithemetic_parser, unary_parser.
 
 
 Provided  example lisp files for testing. 
