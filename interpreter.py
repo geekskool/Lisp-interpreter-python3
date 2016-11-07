@@ -8,7 +8,9 @@ from parser import expression_parser
 lisp_to_python_dic = {
     '+':lambda *x: reduce(op.add, *x), '-':lambda *x: reduce(op.sub, *x),
     '*':lambda *x: reduce(op.mul, *x), '/':lambda *x: reduce(op.truediv, *x),
-    '>':op.gt, '<':op.lt, '>=':op.ge, '<=':op.le, '=':op.eq,
+    '>':lambda *x: reduce(op.gt, *x), '<':lambda *x: reduce(op.lt, *x),
+    '>=':lambda *x: reduce(op.ge, *x), '<=':lambda *x: reduce(op.le, *x),
+    '=':lambda *x: reduce(op.eq, *x),
     'abs':     abs,
     'append':  lambda *x: reduce(op.add, *x),
     'apply':   lambda x: x[0](x[1:]),
@@ -54,7 +56,7 @@ def eval(x, dic):
         return exp
     elif x[0] == 'if':
         (_, test, conseq, alt) = x
-        exp = conseq if eval(test, dic) else alt
+        exp = eval(conseq,dic) if eval(test, dic) else eval(alt,dic)
         return eval(exp, dic)
     elif x[0] == 'define':
         (_, var, exp) = x
@@ -68,19 +70,30 @@ def eval(x, dic):
     else:
         proc = eval(x[0], dic)
         args = [eval(exp, dic) for exp in x[1:]]
-        return proc(args)
+        return proc(args) #fishy stuff *
 
 #((lambda (a b c x)(+ (* a (* x x)) (* b x) c)) 4 2 9 3))
-print(eval(['define', 'x', 10],lisp_to_python_dic))
-print(eval(['define', 'y', 5],lisp_to_python_dic))
-print(eval(['lambda', ['x', 'y'], ['*', 'x', 'y'], 5, 2],lisp_to_python_dic))
+#print(eval(['define', 'x', 10],lisp_to_python_dic))
+#print(eval(['define', 'y', 5],lisp_to_python_dic))
+#print(eval(['lambda', ['x', 'y'], ['*', 'x', 'y'], 5, 2],lisp_to_python_dic))
 
-#print(eval(['*', ['+', 5, 7], ['/', 4, 2]]))
+print(eval(['*', ['+', 5, 7], ['/', 4, 2]],lisp_to_python_dic))
 
+#print(eval(['*', 'x', 'x'],lisp_to_python_dic))
 
-print(eval(['*', 'x', 'x'],lisp_to_python_dic))
+#print(eval(expression_parser('(+ 5 (* 3 2) )')[0],lisp_to_python_dic))
 
-print(eval(expression_parser('(+ 5 (* 3 2) )')[0],lisp_to_python_dic))
+print(eval(['>', 5 ,10],lisp_to_python_dic))
 
-#print(eval(['if', ['>', 5 ,10], ['+','10','5'],['-', 10, 5]])) #-not working
+print(eval(['if', ['<', 5 ,10], ['+', 10, 5],['-', 10, 5]],lisp_to_python_dic))
 
+"""
+def main():
+    file_name = input()
+    with open(file_name, 'r') as f:
+        data = f.read().strip()
+    print(eval(expression_parser(data).pop(0),lisp_to_python_dic))
+
+if __name__ == "__main__":
+    main()
+"""
