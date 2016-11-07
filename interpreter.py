@@ -72,23 +72,22 @@ def eval(x, dic):
         args = [eval(exp, dic) for exp in x[1:]]
         return proc(args)
 
-print(eval(['define', 'x', 100], lisp_to_python_dic))
+#print(eval(['define', 'x', 100], lisp_to_python_dic))
 
-print(eval(['define', 'y', 5], lisp_to_python_dic))
+#print(eval(['define', 'y', 5], lisp_to_python_dic))
 
-print(eval(['lambda', ['x', 'y'], ['*', 'x', 'y'], 5, 2], lisp_to_python_dic))
+#print(eval(['lambda', ['x', 'y'], ['*', 'x', 'y'], 5, 2], lisp_to_python_dic))
 
-print(eval(['*', ['+', 5, 7], ['/', 4, 2]], lisp_to_python_dic))
+#print(eval(['*', ['+', 5, 7], ['/', 4, 2]], lisp_to_python_dic))
 
-print(eval(['*', 'x', 'x'], lisp_to_python_dic))
+#print(eval(['*', 'x', 'x'], lisp_to_python_dic))
 
-print(eval(expression_parser('(+ 5 (* 3 2) )')[0], lisp_to_python_dic))
+#print(eval(expression_parser('(+ 5 (* 3 2) )')[0], lisp_to_python_dic))
 
-print(eval(['>', 5 ,10], lisp_to_python_dic))
+#print(eval(['>', 5 ,10], lisp_to_python_dic))
 
-print(eval(['if', ['<', 5 ,10], ['+', 10, 5],['-', 10, 5]], lisp_to_python_dic))
+#print(eval(['if', ['<', 5 ,10], ['+', 10, 5],['-', 10, 5]], lisp_to_python_dic))
 
-"""
 def main():
     file_name = input()
     with open(file_name, 'r') as f:
@@ -97,4 +96,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-"""
+

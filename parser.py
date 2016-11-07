@@ -21,7 +21,10 @@ def number_parser(data):
         return[data[:number_match.end()], data[number_match.end():]]
 
 def identifier_parser(data):
-    pass
+    identifier_reg_ex = re.compile('\w+')
+    identifier_match = identifier_reg_ex.match(data)
+    if identifier_match:
+        return[data[:identifier_match.end()], data[identifier_match.end():]]
 
 keywords_li = ['define', 'lambda', '*', '+', '-', '/', '<', '>', '<=', '>=', '%', 'if',
                'length', 'abs', 'append', 'pow', 'min', 'max', 'round', 'not', 'quote']
@@ -64,9 +67,6 @@ def if_parser(data):
     if data[:2] == 'if':
         return [data[:2], data[2:]]
 
-def se_parser(data):
-    pass
-
 def atom(s):
     try: return int(s)
     except TypeError:
@@ -97,7 +97,8 @@ def expression_parser(data):
 def any_one_parser_factory(*args):
     return lambda data: (reduce(lambda f, g: f if f(data)  else g, args)(data))
 
-value_parser = any_one_parser_factory(space_parser, bracket_parser, keyword_parser, number_parser)
+value_parser = any_one_parser_factory(space_parser, bracket_parser, keyword_parser,
+                                      number_parser, identifier_parser)
 key_parser = any_one_parser_factory(declarator_parser, lambda_parser, if_parser,
                                     binary_parser, arithemetic_parser, unary_parser)
 
